@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-import { Link, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 import { Logo as BaseLogo } from 'pages/Home'
 
@@ -13,6 +13,7 @@ const Navbar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1rem;
 `
 
 const Logo = styled(BaseLogo)`
@@ -20,11 +21,14 @@ const Logo = styled(BaseLogo)`
 `
 
 const Logout = styled.button`
-  padding: 1rem;
+  padding: 0;
   border: none;
   color: #fff;
   font-weight: 800;
   text-decoration: none;
+  background: transparent;
+  font-family: 'Montserrat';
+  font-size: 1rem;
 `
 
 const Container = styled.div`
@@ -43,6 +47,17 @@ const ActionButton = styled.button`
 class Dashboard extends React.Component {
   state = {
     isLogoutProccessed: false
+  }
+
+  componentDidMount() {
+    const self = this
+    firebase.auth().onAuthStateChanged(user => {
+      if (!user) {
+        self.setState({
+          isLogoutProccessed: true
+        })
+      }
+    })
   }
 
   handleLogout = () => {
