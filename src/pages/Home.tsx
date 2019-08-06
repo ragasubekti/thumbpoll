@@ -12,15 +12,23 @@ export const Logo = styled.div`
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+
+  ::after {
+    content: "thumbpoll";
+  }
 `;
 
 export const LogoWhite = styled.div`
   font-weight: 800;
   font-size: 6rem;
   color: #fff;
+
+  ::after {
+    content: "thumbpoll";
+  }
 `;
 
-const GradientKeyframes = keyframes`
+export const GradientKeyframes = keyframes`
   0% {
       background-position: 0% 50%
   }
@@ -32,7 +40,7 @@ const GradientKeyframes = keyframes`
   }
 `;
 
-const Home = styled.div`
+export const PageWrapper = styled.div`
   min-width: 100vw;
   min-height: 100vh;
   height: 100%;
@@ -73,11 +81,11 @@ const GetStarted = styled(Link)`
 `;
 
 export default () => (
-  <Home>
-    <LogoWhite>thumbpoll</LogoWhite>
+  <PageWrapper>
+    <LogoWhite />
     <Subtitle>Let's poll with our thumb!</Subtitle>
     <div style={{ margin: "3rem 0" }}>
       <GetStarted to="/user/login">Get Started</GetStarted>
     </div>
-  </Home>
+  </PageWrapper>
 );
