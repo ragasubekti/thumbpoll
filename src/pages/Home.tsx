@@ -26,6 +26,10 @@ export const LogoWhite = styled.div`
   ::after {
     content: "thumbpoll";
   }
+
+  @media (max-width: 1024px) {
+    font-size: 4rem;
+  }
 `;
 
 export const GradientKeyframes = keyframes`
@@ -57,10 +61,18 @@ export const PageWrapper = styled.div`
   justify-content: center;
   flex-direction: column;
   padding: 0 10rem;
+
+  @media (max-width: 1024px) {
+    padding: 2rem;
+  }
 `;
 
 const Subtitle = styled.div`
   font-size: 3rem;
+
+  @media (max-width: 1024px) {
+    font-size: 2rem;
+  }
 `;
 
 const GetStarted = styled(Link)`
