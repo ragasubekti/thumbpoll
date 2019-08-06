@@ -3,10 +3,13 @@
 import React from "react";
 import styled from "@emotion/styled";
 
+import { Redirect } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { css, jsx } from "@emotion/core";
 
 import { GradientKeyframes } from "pages/Home";
+
+import firebase from "../../fire";
 
 const FormGroup = styled.div`
   margin: 20px 0;
@@ -64,16 +67,33 @@ const GoogleAuthButton = styled(AuthButton)`
   }
 `;
 
-export default class LoginForm extends React.Component {
+class LoginForm extends React.Component {
   state = {
     form: {
       email: "",
       password: ""
-    }
+    },
+    isLoggedIn: false
+  };
+
+  handleGoogleLogin = () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then(result => {
+        alert("Woke");
+      });
+
+    this.setState({
+      isLoggedIn: true
+    });
   };
 
   render() {
-    return (
+    return this.state.isLoggedIn ? (
+      <Redirect to="/dashboard" />
+    ) : (
       <Formik
         initialValues={this.state.form}
         onSubmit={values => {
@@ -109,7 +129,7 @@ export default class LoginForm extends React.Component {
               >
                 or
               </div>
-              <GoogleAuthButton>
+              <GoogleAuthButton type="button" onClick={this.handleGoogleLogin}>
                 <img
                   src="https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.31/static/media/google-logo.c21ca9d1.svg"
                   css={css`
@@ -126,3 +146,5 @@ export default class LoginForm extends React.Component {
     );
   }
 }
+
+export default LoginForm;
