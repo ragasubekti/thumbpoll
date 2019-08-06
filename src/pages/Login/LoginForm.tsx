@@ -82,12 +82,10 @@ class LoginForm extends React.Component {
       .auth()
       .signInWithPopup(provider)
       .then(result => {
-        alert("Woke");
+        this.setState({
+          isLoggedIn: true
+        });
       });
-
-    this.setState({
-      isLoggedIn: true
-    });
   };
 
   render() {

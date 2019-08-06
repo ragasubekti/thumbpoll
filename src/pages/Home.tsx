@@ -3,6 +3,8 @@ import styled from "@emotion/styled";
 import { keyframes } from "@emotion/core";
 import { Link } from "react-router-dom";
 
+import firebase from "fire";
+
 export const Logo = styled.div`
   font-weight: 800;
   font-size: 2rem;
@@ -92,12 +94,39 @@ const GetStarted = styled(Link)`
   }
 `;
 
-export default () => (
-  <PageWrapper>
-    <LogoWhite />
-    <Subtitle>Let's poll with our thumb!</Subtitle>
-    <div style={{ margin: "3rem 0" }}>
-      <GetStarted to="/user/login">Get Started</GetStarted>
-    </div>
-  </PageWrapper>
-);
+class Home extends React.Component {
+  state = {
+    isAuthorized: false
+  };
+
+  componentDidMount() {
+    const self = this;
+
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        console.log(user);
+        self.setState({
+          isAuthorized: true
+        });
+      }
+    });
+  }
+
+  render() {
+    return (
+      <PageWrapper>
+        <LogoWhite />
+        <Subtitle>Let's poll with our thumb!</Subtitle>
+        <div style={{ margin: "3rem 0" }}>
+          {this.state.isAuthorized ? (
+            <GetStarted to="/dashboard">Go to Dashboard</GetStarted>
+          ) : (
+            <GetStarted to="/user/login">Get Started</GetStarted>
+          )}
+        </div>
+      </PageWrapper>
+    );
+  }
+}
+
+export default Home;
