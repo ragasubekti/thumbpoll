@@ -8,7 +8,7 @@ import LoginForm from "./LoginForm";
 
 import firebase from "fire";
 
-const PageWrapper = styled(BasePageWrapper)`
+export const PageWrapper = styled(BasePageWrapper)`
   display: flex;
   padding: 0;
   justify-content: center;
@@ -20,7 +20,7 @@ const PageWrapper = styled(BasePageWrapper)`
   }
 `;
 
-const AuthCard = styled.div`
+export const AuthCard = styled.div`
   background: #fefefe;
   color: #333;
   padding: 2rem;
@@ -38,12 +38,12 @@ const AuthCard = styled.div`
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     border-radius: 0;
   }
 `;
 
-const Logo = styled(BaseLogo)`
+export const Logo = styled(BaseLogo)`
   font-size: 3rem;
 `;
 
@@ -72,7 +72,7 @@ export default class Login extends React.Component {
       <PageWrapper>
         <AuthCard>
           <Logo />
-
+          <h2>Please login to continue</h2>
           <LoginForm />
         </AuthCard>
       </PageWrapper>

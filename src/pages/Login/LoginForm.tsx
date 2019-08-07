@@ -1,71 +1,13 @@
 /** @jsx jsx */
 
 import React from "react";
-import styled from "@emotion/styled";
 
 import { Redirect } from "react-router-dom";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import { css, jsx } from "@emotion/core";
 
-import { GradientKeyframes } from "pages/Home";
-
-import firebase from "../../fire";
-
-const FormGroup = styled.div`
-  margin: 20px 0;
-
-  label {
-    display: block;
-  }
-`;
-
-const FormInput = styled(Field)`
-  border: 1.5px solid #ccc;
-  background: #fefefe;
-  font-size: 1rem;
-  margin: 10px 0;
-  padding: 1rem 0.5rem;
-  border-radius: 5px;
-  width: 100%;
-  box-sizing: border-box;
-`;
-
-const AuthButton = styled.button`
-  background: #e71d36;
-  padding: 1rem 1.5rem;
-  color: #fdfffc;
-  border-radius: 5px;
-  border: none;
-  font-size: 0.9rem;
-  width: 100%;
-  font-weight: bold;
-  transition: 0.25s;
-  &:hover {
-    transition: 0.25s;
-    background: #ff9f1c;
-  }
-`;
-
-const GoogleAuthButton = styled(AuthButton)`
-  background: #fff;
-  color: #333;
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.5s ease;
-
-  &:hover {
-    transition: 0.5s;
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-    color: #fff;
-    background-size: 400% 400%;
-
-    -webkit-animation: ${GradientKeyframes} 10s ease infinite;
-    -moz-animation: ${GradientKeyframes} 10s ease infinite;
-    animation: ${GradientKeyframes} 10s ease infinite;
-  }
-`;
+import firebase from "fire";
+import {AuthButton, FormGroup, FormInput, GoogleAuthButton, Link} from "pages/Login/styled";
 
 class LoginForm extends React.Component {
   state = {
@@ -81,7 +23,7 @@ class LoginForm extends React.Component {
     firebase
       .auth()
       .signInWithPopup(provider)
-      .then(result => {
+      .then(() => {
         this.setState({
           isLoggedIn: true
         });
@@ -137,6 +79,16 @@ class LoginForm extends React.Component {
                 />
                 Login with Google
               </GoogleAuthButton>
+
+              <div
+                css={css`
+                  margin: 20px 10px;
+                  height: 1px;
+                  background: #ccc;
+                `}
+              />
+
+              <Link to="/user/register">Create a new account</Link>
             </FormGroup>
           </Form>
         )}

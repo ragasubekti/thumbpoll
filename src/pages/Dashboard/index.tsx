@@ -1,11 +1,11 @@
-import React from 'react'
-import styled from '@emotion/styled'
+import React from "react";
+import styled from "@emotion/styled";
 
-import { Redirect } from 'react-router-dom'
+import { Redirect } from "react-router-dom";
 
-import { Logo as BaseLogo } from 'pages/Home'
+import { Logo as BaseLogo } from "pages/Home";
 
-import firebase from 'fire'
+import firebase from "fire";
 
 const Navbar = styled.div`
   background: #1d3557;
@@ -14,11 +14,11 @@ const Navbar = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-`
+`;
 
 const Logo = styled(BaseLogo)`
   font-size: 2rem;
-`
+`;
 
 const Logout = styled.button`
   padding: 0;
@@ -27,13 +27,13 @@ const Logout = styled.button`
   font-weight: 800;
   text-decoration: none;
   background: transparent;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-size: 1rem;
-`
+`;
 
 const Container = styled.div`
   margin: 2rem;
-`
+`;
 
 const ActionButton = styled.button`
   padding: 0.75rem 1rem;
@@ -42,35 +42,39 @@ const ActionButton = styled.button`
   border: none;
   border-radius: 5px;
   font-size: 1rem;
-`
+`;
 
 class Dashboard extends React.Component {
   state = {
-    isLogoutProccessed: false
-  }
+    isLogoutProccessed: false,
+    profile: {
+      displayName: ""
+    }
+  };
 
   componentDidMount() {
-    const self = this
+    const self = this;
     firebase.auth().onAuthStateChanged(user => {
-      if (!user) {
-        self.setState({
-          isLogoutProccessed: true
-        })
-      }
-    })
+      user
+        ? this.setState({ profile: user })
+        : this.setState({ profile: {}, isLogoutProccessed: true });
+
+      console.log(user ? user.displayName : "");
+    });
   }
 
   handleLogout = () => {
-    const self = this
+    console.log("Runs!");
+    const self = this;
     firebase
       .auth()
       .signOut()
       .then(() => {
         self.setState({
           isLogoutProccessed: true
-        })
-      })
-  }
+        });
+      });
+  };
 
   render() {
     return this.state.isLogoutProccessed ? (
@@ -80,16 +84,18 @@ class Dashboard extends React.Component {
         <Navbar>
           <Logo />
           <div>
-            <span>Raga Subekti</span> |{' '}
-            <Logout onClick={this.handleLogout}>Logout</Logout>
+            <span>
+              {this.state.profile ? this.state.profile.displayName : ""}
+            </span>{" "}
+            | <Logout onClick={this.handleLogout}>Logout</Logout>
           </div>
         </Navbar>
         <Container>
           <ActionButton onClick={() => {}}>Add Poll</ActionButton>
         </Container>
       </React.Fragment>
-    )
+    );
   }
 }
 
-export default Dashboard
+export default Dashboard;

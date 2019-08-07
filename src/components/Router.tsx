@@ -7,6 +7,7 @@ export default () => (
   <BrowserRouter>
     {routes.map(route => (
       <Route
+        key={route.path}
         path={route.path}
         component={route.component}
         exact={route.path === "/"}

@@ -1,7 +1,10 @@
+/** @jsx jsx */
+
 import React from "react";
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/core";
 import { Link } from "react-router-dom";
+import { css, jsx } from "@emotion/core";
 
 import firebase from "fire";
 
@@ -30,7 +33,7 @@ export const LogoWhite = styled.div`
   }
 
   @media (max-width: 1024px) {
-    font-size: 4rem;
+    font-size: 3.35rem;
   }
 `;
 
@@ -47,13 +50,11 @@ export const GradientKeyframes = keyframes`
 `;
 
 export const PageWrapper = styled.div`
-  min-width: 100vw;
   min-height: 100vh;
   height: 100%;
-  width: 100%;
 
   color: #fff;
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background: linear-gradient(-75deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   -webkit-animation: ${GradientKeyframes} 20s ease infinite;
   -moz-animation: ${GradientKeyframes} 20s ease infinite;
@@ -73,7 +74,7 @@ const Subtitle = styled.div`
   font-size: 3rem;
 
   @media (max-width: 1024px) {
-    font-size: 2rem;
+    font-size: 1.6rem;
   }
 `;
 
@@ -91,6 +92,10 @@ const GetStarted = styled(Link)`
     transition: 0.5s ease-in-out;
     background: #fff;
     color: #333;
+  }
+
+  @media (max-width: 1024px) {
+    padding: 0.75rem 2rem;
   }
 `;
 
@@ -117,7 +122,11 @@ class Home extends React.Component {
       <PageWrapper>
         <LogoWhite />
         <Subtitle>Let's poll with our thumb!</Subtitle>
-        <div style={{ margin: "3rem 0" }}>
+        <div
+          css={css`
+            margin: 2rem 0;
+          `}
+        >
           {this.state.isAuthorized ? (
             <GetStarted to="/dashboard">Go to Dashboard</GetStarted>
           ) : (
